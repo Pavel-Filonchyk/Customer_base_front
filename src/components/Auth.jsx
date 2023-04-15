@@ -6,6 +6,7 @@ import _ from 'lodash'
 import Customers from './Customers'
 import { MyContext } from '../pages/index'
 import httpProvider from '../common/httpProvider'
+import { POST_CUSTOMER } from '../common/api'
 
 export default function Auth({users}) {
     
@@ -33,7 +34,7 @@ export default function Auth({users}) {
                 email: e.email, 
                 admin: status
             }
-            const { data } = await httpProvider.post('http://localhost:3001/postCustomer', {data: newObj})
+            const { data } = await httpProvider.post(POST_CUSTOMER, {data: newObj})
             setCustomers(data)
         }else{
             const newObj = {
@@ -45,7 +46,7 @@ export default function Auth({users}) {
                 email: e.email, 
                 admin: status
             }
-            const { data } = await httpProvider.post('http://localhost:3001/postCustomer', {data: newObj})
+            const { data } = await httpProvider.post(POST_CUSTOMER, {data: newObj})
             setCustomers(data)
         }
         

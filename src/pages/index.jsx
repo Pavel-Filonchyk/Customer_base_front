@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 //import type { NextPage } from 'next';
 import Head from 'next/head'
 import Auth from '../components/Auth'
+import { GET_CUSTOMERS } from '../common/api'
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 export const MyContext = React.createContext({
@@ -32,7 +33,7 @@ const Home = ({users}) => {
 export default Home;
 
 export const getServerSideProps = async () => {
-  const response = await fetch('http://localhost:3001/list')
+  const response = await fetch(GET_CUSTOMERS)
   const users = await response.json()
 
   return {

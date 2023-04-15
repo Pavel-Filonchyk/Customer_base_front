@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import Jdenticon from 'react-jdenticon'
 import {MyContext} from '../pages/index'
 import httpProvider from '../common/httpProvider'
+import { DELETE_CUSTOMER, EDIT_CUSTOMER } from '../common/api'
 
 const Customers = ({users}) => {
     const [customers, setCustomers] = useState(null)
@@ -12,11 +13,11 @@ const Customers = ({users}) => {
     }, [users])
     
     const onDelete = async (id) => {
-        const { data } = await httpProvider.post('http://localhost:3001/delete', {data: {id}})
+        const { data } = await httpProvider.post(DELETE_CUSTOMER, {data: {id}})
         setCustomers(data)
     }
     const onEdit = async (id) => {
-        const { data } = await httpProvider.put('http://localhost:3001/customer', {data: {id}})
+        const { data } = await httpProvider.put(EDIT_CUSTOMER, {data: {id}})
         setUser(data)
     }
 
@@ -62,5 +63,5 @@ const Customers = ({users}) => {
   )
 }
 export default Customers
-// 'https://cdn.discordapp.com/attachments/1008571211179118703/1096044336300425216/Eye.png'
+
 
