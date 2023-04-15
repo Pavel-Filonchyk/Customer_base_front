@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 //import type { NextPage } from 'next';
 import Head from 'next/head'
 import Auth from '../components/Auth'
@@ -9,6 +9,7 @@ export const MyContext = React.createContext({
   user: null,
   setUser: () => {},
 })
+
 
 const Home = ({users}) => {
   const [user, setUser] = useState([{admin: 'User'}])
