@@ -10,6 +10,7 @@ export default function Auth({users}) {
     const [status, setStatus] = useState('User')
     const [required, setRequired] = useState(false)
     const [customers, setCustomers] = useState(null)
+    const [showPassword, setShowPassword] = useState(false)
     const { user } = useContext(MyContext)
 
     useEffect(() => {
@@ -24,8 +25,7 @@ export default function Auth({users}) {
         if(_.size(user[0]) > 1){
             const newObj = {
                 id: user[0].id, 
-                value: user[0
-                ].value, 
+                value: user[0].value, 
                 firstName: e.firstName,  
                 lastName: e.lastName, 
                 company: e.company, 
@@ -64,10 +64,13 @@ export default function Auth({users}) {
             setCustomers(result)
         }
     }
-
+    const onShowPassword = () => {
+        setShowPassword(value => !value)
+        console.log(1)
+    }
   return (
     <div className='flex flex-row'>
-        <div className='flex flex-col h-full px-10 border-r-2' style={{width: 520}} >
+        <div className='flex flex-col h-full px-10 border-r-2' style={{width: 520}}>
             <Formik
                 enableReinitialize={true}
                 initialValues={user[0]}
@@ -98,18 +101,16 @@ export default function Auth({users}) {
                     <div className='flex flex-row'>
                         <div className='flex flex-col'>
                             <p className='font-medium text-base text-slate-900 font-sans'>First Name</p>
-                            <MyTextInput name="firstName" type="text" className='mt-2.5 w-52 h-10 border-2 border-slate-200 rounded-lg px-3'
-                                
-                            />
+                            <MyTextInput name="firstName" type="text" className='mt-2.5 w-52 h-10 border-2 border-slate-200 rounded-lg px-3 active:border-4' style={{outline: 'none'}}/>
                         </div>
                         <div className='flex flex-col mx-5'>
                             <p className='font-medium text-base text-slate-900 font-sans'>Last Name</p>
-                            <MyTextInput name="lastName" type="text" className='mt-2.5 w-52 h-10 border-2 border-slate-200 rounded-lg px-3'/> 
+                            <MyTextInput name="lastName" type="text" className='mt-2.5 w-52 h-10 border-2 border-slate-200 rounded-lg px-3 active:border-4' style={{outline: 'none'}}/> 
                         </div>
                     </div>
                     <div className='flex flex-col mt-6'>
                         <p className='font-medium text-base text-slate-900 font-sans'>Company</p>
-                        <MyTextInput name="company" type="text" className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3'/>
+                        <MyTextInput name="company" type="text" className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3 active:border-4' style={{outline: 'none'}}/>
                     </div>
                     <div className='flex flex-col mt-6'>
                         <p className='font-medium text-base text-slate-900 font-sans'>Status</p>
@@ -138,21 +139,25 @@ export default function Auth({users}) {
                     </div>
                     <div className='flex flex-col mt-6'>
                         <p className='font-medium text-base text-slate-900 font-sans'>Email</p>
-                        <MyTextInput name="email" type="email" className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3'/>
+                        <MyTextInput name="email" type="email" className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3 active:border-4' style={{outline: 'none'}}/>
                     </div>
                     {
                         _.size(user[0]) > 1 ? '' 
-                        :  <div className='flex flex-col mt-6'>
+                        :  <div className='flex flex-col mt-6' style={{position: 'relative'}}>
+                            <div style={{position: 'absolute', top: 43, right: 8}}
+                                onClick={() => onShowPassword()}
+                            >
+                                {
+                                    showPassword ? <img src={'https://cdn.discordapp.com/attachments/1008571211179118703/1096044336300425216/Eye.png'} alt="Eya" style={{width: 24, height: 24}}/>
+                                    : <img src={'https://cdn.discordapp.com/attachments/1008571211179118703/1096700935436242984/Eye_Off.png'} alt="Eya off" style={{width: 24, height: 24}}/>
+                                }
+                            </div>
                             <p className='font-medium text-base text-slate-900 font-sans'>Password</p>
-                            <MyTextInput name='password' type='password' autoComplete='off' className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3'
+                            <MyTextInput name='password' type={showPassword ? 'text' : 'password'} autoComplete='off' className='mt-2.5 w-full h-10 border-2 border-slate-200 rounded-lg px-3 active:border-4' style={{outline: 'none'}}
                                 onClick={() => setRequired(true)}
                             />
-                            {
-                            required ? ''
-                            : <p className='mt-2.5 font-normal text-sm font-sans text-slate-400'>8+ characters</p>
-                            }
+                            <p className='mt-1.5 font-normal text-sm font-sans text-slate-400' style={{visibility:  required ? "hidden" : "visible", }}>8+ characters</p> 
                         </div>
-                        
                     }
                     <button type="submit" className='my-6 w-full h-10 rounded-lg bg-sky-500 text-white text-base font-bold font-sans'>Save</button>
                 </Form>
