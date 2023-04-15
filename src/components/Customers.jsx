@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Jdenticon from 'react-jdenticon'
-import {MyContext} from './index'
- 
+import {MyContext} from '../pages/index'
+import httpProvider from '../common/httpProvider'
+
 const Customers = ({users}) => {
     const [customers, setCustomers] = useState(null)
     const {user, setUser} = useContext(MyContext)
@@ -11,31 +12,15 @@ const Customers = ({users}) => {
     }, [users])
     
     const onDelete = async (id) => {
-        const response = await fetch('http://localhost:3001/delete', {
-            method: 'POST',
-            body: JSON.stringify({ id }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-        })
-        const result = await response.json()
-        setCustomers(result)
+        const { data } = await httpProvider.post('http://localhost:3001/delete', {data: {id}})
+        setCustomers(data)
     }
     const onEdit = async (id) => {
-        const response = await fetch('http://localhost:3001/customer', {
-            method: 'PUT',
-            body: JSON.stringify({ id }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-        })
-        const result = await response.json()
-        setUser(result)
+        const { data } = await httpProvider.put('http://localhost:3001/customer', {data: {id}})
+        setUser(data)
     }
+
   return (
-   
     <div className='flex flex-col h-full px-10'>
         <p className='my-10 font-bold text-xl text-slate-900 font-sans'>Customers</p>
         <div className='flex flex-row h-6 mb-3'>

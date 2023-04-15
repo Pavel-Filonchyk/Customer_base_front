@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 //import type { NextPage } from 'next';
 import Head from 'next/head'
-import Auth from './Auth'
+import Auth from '../components/Auth'
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 export const MyContext = React.createContext({
